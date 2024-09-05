@@ -4,11 +4,26 @@ Author: Anthony Dessiatnikoff
 
 It allows to display information about remote systems using a Local File Include vulnerability.
 
-For now, you can display :
-- list of users on the system
+- list of users on the system :
+
+![Screen capture of users option](GIFF_Capture_users.png)
+
 - list of executed processes
-- OS version
-- list of TCP/UDP Connections for IPv4 and IPv6
+
+![Screen capture of ps option](GIFF_Capture_ps.png)
+A CSV file with all processes will be created for convenience.
+
+- OS version :
+
+![Screen capture of os option](GIFF_Capture_os_POST.png)
+
+- list of TCP/UDP Connections for IPv4 and IPv6 :
+  
+![Screen capture of ports option](GIFF_Capture_ports.png)
+
+
+
+
 
 ## TODO
 
