@@ -2,23 +2,23 @@
 
 Author: Anthony Dessiatnikoff
 
-Allow to display informations about remote systems with a (basic) LFI vulnerability.
+It allows to display information about remote systems using a Local File Include vulnerability.
 
 For now, you can display :
-- list of users
-- list of processes
-- list of TCP/UDP Connections
+- list of users on the system
+- list of executed processes
+- OS version
+- list of TCP/UDP Connections for IPv4 and IPv6
 
 ## TODO
 
-- POST requests
-- Proxy
-- Encoding
+- Encoding (base64, ...)
 - More advanced inclusion
+- Use of a request file (with -r)
 
 ## DISCLAIMER
 
-Only use to test your systems or when you have authorisations of the owner.
-DO NOT USE if you do not have proper authorisation.
-Use on your own risk. 
-The owner of the tool  will not be responsible of your actions.
+This tool is intended for use only on systems that you own or have explicit authorization to test.
+DO NOT USE this tool without proper authorization.
+You assume all risks associated with its use.
+The creator of this tool will not be held liable for any actions performed with it.
