@@ -11,6 +11,7 @@ It allows to display information about remote systems using a Local File Include
 - list of executed processes
 
 ![Screen capture of ps option](GIFF_Capture_ps.png)
+
 A CSV file with all processes will be created for convenience.
 
 - OS version :
@@ -20,9 +21,6 @@ A CSV file with all processes will be created for convenience.
 - list of TCP/UDP Connections for IPv4 and IPv6 :
   
 ![Screen capture of ports option](GIFF_Capture_ports.png)
-
-
-
 
 
 ## TODO
