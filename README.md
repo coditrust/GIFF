@@ -3,6 +3,8 @@
 Author: Anthony Dessiatnikoff
 
 It allows to display information about remote systems using a Local File Include vulnerability.
+Targets: Linux only (for now)
+It is not an exploit! It only extract information from some files on the target.
 
 - list of users on the system :
 
