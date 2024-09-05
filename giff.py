@@ -63,12 +63,12 @@ class InfosFromMachine():
         self.n_start_junk = 0
         self.n_end_junk = 0
         self.proxy = ""
-        self.proxies = {'http': self.proxy, 'https':self.proxy}
         
     def ask_for_file(self, method="get", url="", template="FUZZ", input=""):
         self.method = method
         self.url = url
         self.template = template
+        self.proxies = {'http': self.proxy, 'https':self.proxy}
         
         if method.lower() == "get":
             if template != "":
@@ -82,7 +82,7 @@ class InfosFromMachine():
                     print(f"-->  {u}")
                 return r
             else:
-                r = requests.get(url)
+                r = requests.get(url, proxies=self.proxies)
                 return r
         elif method.lower() == "post":
             # Not supported for now
@@ -417,7 +417,7 @@ class InfosFromMachine():
         parser.add_argument('--users', action="store_true", help='To get users')
         parser.add_argument('--ps', action="store_true", help='To get executed processes')
         parser.add_argument('--ports', action="store_true", help='To get open ports')
-        #parser.add_argument('--env', action="store_true", help='To get info from current user')
+        parser.add_argument('--env', action="store_true", help='To get info from current user')
         parser.add_argument('--os', action="store_true", help='To get info from OS')
         #parser.add_argument('--iface', action="store_true", help='To get network interfaces')
         
@@ -426,7 +426,7 @@ class InfosFromMachine():
         # TODO
         #parser.add_argument('--b64', help='To encode the FUZZ parameter in base64')
         #parser.add_argument('--delay', help='To add delay between requests')
-        #parser.add_argument('--proxy', help='To add a proxy, ex: http://127.0.0.1:8080')
+        parser.add_argument('--proxy', nargs=1, help="To add a proxy, ex: --proxy 'http://127.0.0.1:8080'")
         
         args = parser.parse_args()
 
@@ -435,6 +435,9 @@ class InfosFromMachine():
         
         if args.data:
             self.data = args.data[0]
+
+        if args.proxy:
+            self.proxy = args.proxy[0]
         
         url = args.url
         self.verbose = args.v
