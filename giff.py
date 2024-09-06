@@ -417,7 +417,7 @@ class InfosFromMachine():
         parser.add_argument('--users', action="store_true", help='To get users')
         parser.add_argument('--ps', action="store_true", help='To get executed processes')
         parser.add_argument('--ports', action="store_true", help='To get open ports')
-        parser.add_argument('--env', action="store_true", help='To get info from current user')
+        #parser.add_argument('--env', action="store_true", help='To get info from current user')
         parser.add_argument('--os', action="store_true", help='To get info from OS')
         #parser.add_argument('--iface', action="store_true", help='To get network interfaces')
         
