@@ -121,7 +121,7 @@ class InfosFromMachine():
             if last_index_page != -1:
                 self.n_end_junk = len(data_page) - last_index_page - len(last_line)
             else:
-                self.n_end_junk = 0
+                self.n_end_junk = len(data_page)
                 return -1
             
             n = 0
@@ -156,7 +156,12 @@ class InfosFromMachine():
                 else:
                     n += len(line) + 1 
             self.endIndex = self.startIndex + n
+            #print(self.endIndex)
+            #print(len(data_page))
+            
             self.n_end_junk = len(data_page) - self.endIndex
+            #self.n_end_junk = len(data_page)
+            
             
             return 0
         elif first_line == "" and last_line == "":
@@ -170,6 +175,7 @@ class InfosFromMachine():
             
             self.searchForIndexes(r.content, first_line=b"root:")
             data = r.content[self.startIndex:self.endIndex]
+            
             lines = data.splitlines()
             
             for l in lines:
@@ -226,7 +232,39 @@ class InfosFromMachine():
             print("Kernel version: " + data.strip().decode())
             
                 
+
+    def get_www_conf(self):
+        filenames = ["/etc/apache2/sites-enabled/000-default.conf", "/etc/nginx/sites-enabled/default"]
+
+        for filename in filenames:
+            
+            r = self.ask_for_file(self.method, self.url, self.template, filename)
+            if r != None:
+
+                if self.n_end_junk != 0:
+                    data = r.content[self.n_start_junk:-self.n_end_junk]
+                else:
+                    data = r.content[self.n_start_junk:]
                 
+                lines = data.splitlines()
+                
+                for l in lines:
+
+                    if b" " in l:
+                        key = l.strip().split(b" ")[0]
+                        value = l.strip().split(b" ")[1].replace(b'"', b'')
+                        
+                        if key.lower() == b"documentroot" and filename == "/etc/apache2/sites-enabled/000-default.conf":
+                            print(f"Web Server Path (Apache2): {value.decode()}")
+                            
+                        if key.lower() == b"root" and filename == "/etc/nginx/sites-enabled/default":
+                            print(f"Web Server Path (nginx): {value.decode().replace(';', '')}")
+
+                    
+        
+            
+
+            
 
     # Get user line (from /etc/passwd)
     # filter must be 'user', 'uid'
@@ -417,6 +455,7 @@ class InfosFromMachine():
         parser.add_argument('--users', action="store_true", help='To get users')
         parser.add_argument('--ps', action="store_true", help='To get executed processes')
         parser.add_argument('--ports', action="store_true", help='To get open ports')
+        parser.add_argument('--path', action="store_true", help='To get the web server root path')
         #parser.add_argument('--env', action="store_true", help='To get info from current user')
         parser.add_argument('--os', action="store_true", help='To get info from OS')
         #parser.add_argument('--iface', action="store_true", help='To get network interfaces')
@@ -450,9 +489,14 @@ class InfosFromMachine():
 
         print(f"[*] The following URL is targeted : {self.url}")
 
-        if args.env:
+
+        if args.path:
             self.get_users()
-            self.get_env()
+            self.get_www_conf()
+
+        #if args.env:
+        #    self.get_users()
+        #    self.get_env()
         
         if args.users:
             self.get_users()
