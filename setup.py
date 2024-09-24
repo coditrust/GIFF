@@ -4,7 +4,7 @@ setup(
     name='giff',
     version='0.1.0',
     author='Anthony Dessiatnikoff',
-    description='This project allows to get information from vulnerable systems',
+    description='This project allows to get information from vulnerable systems using LFI',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     py_modules=['giff'],
